@@ -111,7 +111,7 @@ public class ArrayQueueTest{
   }
 
   @Test
-  public void multiplePushesAndPopsMaintainsIntegrityOfQueue(){
+  public void multipleEnqueuesAndDequeuesMaintainsIntegrityOfQueue(){
     ArrayQueue<Integer> queue = new ArrayQueue<>();
     int[] actual = {0, 2, 4, 6, 8, 10, 1, 3, 5, 7, 9};
     int n = actual.length;

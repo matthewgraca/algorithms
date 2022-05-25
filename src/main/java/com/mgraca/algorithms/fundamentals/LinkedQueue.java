@@ -1,16 +1,37 @@
 package com.mgraca.algorithms.fundamentals;
 
+import java.util.NoSuchElementException;
+
 public class LinkedQueue<T>{
+  private Node head;
+  private Node tail;
+  private int size;
+
   private class Node{
     T data;
     Node next;
   }
+
+  public LinkedQueue(){
+    head = tail = null;
+    size = 0;
+  }
+
   /**
    * Adds a new entry to the back of the queue
    * @param entry The item being added
    */
   public void enqueue(T entry){
-
+    Node temp = new Node();
+    temp.data = entry;
+    if (isEmpty()){
+      head = tail = temp;
+    }
+    else{
+      tail.next = temp;
+      tail = tail.next;
+    }
+    size++;
   }
 
   /**
@@ -19,7 +40,18 @@ public class LinkedQueue<T>{
    * @throws  NoSuchElementException if the queue is empty before the operation
    */
   public T dequeue(){
-    return null;
+    if (isEmpty()){
+      throw new NoSuchElementException("Cannot dequeue from an empty queue");
+    }
+    else{
+      T temp = head.data;
+      head = head.next;
+      if (head == null){
+        tail = null;
+      }
+      size--;
+      return temp;
+    }
   }
 
   /**
@@ -28,7 +60,12 @@ public class LinkedQueue<T>{
    * @throws  NoSuchElementException if the queue is empty
    */
   public T peek(){
-    return null;
+    if (isEmpty()){
+      throw new NoSuchElementException("Cannot peek into empty queue");
+    }
+    else{
+      return head.data;
+    }
   }
 
   /**
@@ -36,14 +73,15 @@ public class LinkedQueue<T>{
    * @return  True is the queue is empty
    */
   public boolean isEmpty(){
-    return true;
+    return head == null;
   }
 
   /**
    * Removes all entries from the queue
    */
   public void clear(){
-
+    head = tail = null;
+    size = 0;
   }
 
   /**
