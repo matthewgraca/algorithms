@@ -15,7 +15,7 @@ public class SelectionTest{
       actual[i] = expected[i] = i;
     }
     Arrays.sort(expected);
-    Insertion.sort(actual);
+    Selection.sort(actual);
     assertTrue(Arrays.equals(actual, expected));
   }
 
@@ -28,7 +28,7 @@ public class SelectionTest{
       actual[n-i-1] = expected[n-i-1] = i;
     }
     Arrays.sort(expected);
-    Insertion.sort(actual);
+    Selection.sort(actual);
     assertTrue(Arrays.equals(actual, expected));
   }
 
@@ -41,7 +41,7 @@ public class SelectionTest{
       actual[i] = expected[i] = rng.nextInt();
     }
     Arrays.sort(expected);
-    Insertion.sort(actual);
+    Selection.sort(actual);
     assertTrue(Arrays.equals(actual, expected));
   }
 
@@ -54,7 +54,7 @@ public class SelectionTest{
       actual[i] = expected[i] = rng.nextInt();
     }
     Arrays.sort(expected);
-    Insertion.sort(actual);
+    Selection.sort(actual);
     assertTrue(Arrays.equals(actual, expected));
   }
 
@@ -67,7 +67,7 @@ public class SelectionTest{
       actual[i] = expected[i] = rng.nextInt();
     }
     Arrays.sort(expected);
-    Insertion.sort(actual);
+    Selection.sort(actual);
     assertTrue(Arrays.equals(actual, expected));
   }
 
@@ -80,7 +80,7 @@ public class SelectionTest{
       actual[i] = expected[i] = rng.nextInt();
     }
     Arrays.sort(expected);
-    Insertion.sort(actual);
+    Selection.sort(actual);
     assertTrue(Arrays.equals(actual, expected));
   }
 }
