@@ -14,14 +14,12 @@ public class Selection{
    * Sorts the contents of a given array
    * @param a The array being sorted
    */
-  public static void sort(Comparable[] a){
+  public static <T extends Comparable<? super T>> void sort(T[] a){
     int n = a.length;
     for (int i = 0; i < n; i++){
       int minIndex = i;
-      // scan the array for the smallest value
-      for (int j = i+1; j < n; j++){
-        // swap i with the minIndex
-        if (less(a[j], a[minIndex])){
+      for (int j = i+1; j < n; j++){  // scan the array for the smallest value
+        if (less(a[j], a[minIndex])){ // swap i with the minIndex
           minIndex = j;
         }
       }
@@ -35,7 +33,7 @@ public class Selection{
    * @param w The other item being checked against
    * @return  True if v is smaller than w
    */
-  private static boolean less(Comparable v, Comparable w){
+  private static <T extends Comparable<? super T>> boolean less(T v, T w){
     return v.compareTo(w) < 0;
   }
 
@@ -45,8 +43,8 @@ public class Selection{
    * @param i The element whose data will be swapped with j
    * @param j The element whose data will be swapped with i
    */
-  private static void exchange(Comparable[] a, int i, int j){
-    Comparable temp = a[i];
+  private static void exchange(Object[] a, int i, int j){
+    Object temp = a[i];
     a[i] = a[j];
     a[j] = temp;
   }

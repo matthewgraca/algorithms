@@ -1,12 +1,24 @@
 package com.mgraca.algorithms.sorting;
 
+/*
+ * Inserts each entry into its proper position among the entries already considered.
+ * Continuously swaps with adjacent element until smallest value propagates to the bottom.
+ *
+ * n^2/4 compares
+ * n^2/4 exchanges
+ */
 public class Insertion{
   /**
    * Sorts the contents of a given array
    * @param a The array being sorted
    */
-  public static void sort(Comparable[] a){
-
+  public static <T extends Comparable<? super T>> void sort(T[] a){
+    int n = a.length;
+    for (int i = 0; i < n; i++){
+      for (int j = i; j > 0 && less(a[j], a[j-1]); j--){
+        exchange(a, j, j-1);
+      }
+    }
   }
 
   /**
@@ -15,8 +27,8 @@ public class Insertion{
    * @param w The other item being checked against
    * @return  True if v is smaller than w
    */
-  private static boolean less(Comparable v, Comparable w){
-    return true;
+  private static <T extends Comparable<? super T>> boolean less(T v, T w){
+    return v.compareTo(w) < 0;
   }
 
   /**
@@ -25,7 +37,9 @@ public class Insertion{
    * @param i The element whose data will be swapped with j
    * @param j The element whose data will be swapped with i
    */
-  private static void exchange(Comparable[] a, int i, int j){
-
+  private static void exchange(Object[] a, int i, int j){
+    Object temp = a[i];
+    a[i] = a[j];
+    a[j] = temp;
   }
 }
