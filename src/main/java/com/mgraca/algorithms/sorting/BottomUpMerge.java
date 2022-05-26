@@ -1,6 +1,6 @@
 package com.mgraca.algorithms.sorting;
 
-public class Merge{
+public class BottomUpMerge{
   /**
    * Sorts the contents of a given array
    * @param a The array being sorted
@@ -9,25 +9,11 @@ public class Merge{
     int n = a.length;
     @SuppressWarnings("unchecked")
     T[] aux = (T[])new Comparable<?>[n];
-    sort(a, aux, 0, n-1);
-  }
-
-  /**
-   * Method responsible for the recursive calls of sort
-   * @param a The array being sorted
-   * @param aux The auxilliary arrya supporting the sort
-   * @param lo  The lower index of the array being sorted
-   * @param hi  The upper index of the array being sorted
-   */
-  private static <T extends Comparable<? super T>> void 
-  sort(T[] a, T[] aux, int lo, int hi){
-    if (hi <= lo){
-      return;
+    for (int len = 1; len < n; len *= 2){
+      for (int lo = 0; lo < n-len; lo += len+len){
+        merge(a, aux, lo, lo+len-1, Math.min(lo+len+len-1, n-1));
+      }
     }
-    int mid = lo + (hi-lo) / 2; // overflow safe method of taking an average
-    sort(a, aux, lo, mid);      // sort left
-    sort(a, aux, mid+1, hi);    // sort right
-    merge(a, aux, lo, mid, hi); // merge results
   }
 
   /**
