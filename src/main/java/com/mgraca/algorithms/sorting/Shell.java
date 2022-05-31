@@ -1,11 +1,5 @@
 package com.mgraca.algorithms.sorting;
 
-/*
- * Array is sorted in blocks, reducing exchanges needed for Insertion sort
- *
- * n^(3/2) compares
- * n^2/4 exchanges
- */
 public class Shell{
   /**
    * Sorts the contents of a given array

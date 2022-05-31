@@ -1,14 +1,5 @@
 package com.mgraca.algorithms.sorting;
 
-/*
- * Finds the smallest item in the array and exashnges it with the first entry.
- * Then, find the next smallest item and exhange it with the second entry.
- * Continue in this manner until the entire array is sorted.
- * Heuristic: you repeatedly select the smallest remaining value.
- * 
- * n^2/2 compares
- * n exchanges
- */
 public class Selection{
   /**
    * Sorts the contents of a given array

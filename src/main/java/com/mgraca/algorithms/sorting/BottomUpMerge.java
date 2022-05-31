@@ -1,5 +1,13 @@
 package com.mgraca.algorithms.sorting;
 
+/*
+ * Due to Java being unable to use generic variables under static contexts,
+ * it is necessary to pass the auxilliary array through the method.
+ * The book provides an implementation which doesn't require passing the array; 
+ * however, that would require the use of Comparable which would trigger 
+ * compiler complaints about unchecked warnings. These warnings are probably 
+ * safe to suppress, but I've chosen to maintain a consistent implementation.
+ */
 public class BottomUpMerge{
   /**
    * Sorts the contents of a given array

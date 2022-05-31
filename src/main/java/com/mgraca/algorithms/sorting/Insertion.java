@@ -1,12 +1,5 @@
 package com.mgraca.algorithms.sorting;
 
-/*
- * Inserts each entry into its proper position among the entries already considered.
- * Continuously swaps with adjacent element until smallest value propagates to the bottom.
- *
- * n^2/4 compares
- * n^2/4 exchanges
- */
 public class Insertion{
   /**
    * Sorts the contents of a given array
