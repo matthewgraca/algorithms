@@ -1,8 +1,12 @@
-package com.mgraca.algorithms.sorting;
+package com.mgraca.algorithms.sorting.quick;
 
 import java.util.Random;
+import com.mgraca.algorithms.sorting.elementary.Insertion;
 
-public class Quick{
+public class QuickInsertion{
+  // cutoff for the size of the subarrays to begin insetion sort; [5,15]
+  private static int CUTOFF = 10; 
+
   /**
    * Sorts the contents of a given array
    * @param a The array being sorted
@@ -19,7 +23,8 @@ public class Quick{
    * @param hi  The upper index of the array being sorted
    */
   private static <T extends Comparable<? super T>> void sort(T[] a, int lo, int hi){
-    if (hi <= lo){
+    if (hi <= lo + CUTOFF){
+      Insertion.sort(a, lo, hi);
       return;
     }
     int j = partition(a, lo, hi); // place partitioning item in proper place

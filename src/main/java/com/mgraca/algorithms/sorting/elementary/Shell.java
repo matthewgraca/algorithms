@@ -1,16 +1,25 @@
-package com.mgraca.algorithms.sorting;
+package com.mgraca.algorithms.sorting.elementary;
 
-public class Insertion{
+public class Shell{
   /**
    * Sorts the contents of a given array
    * @param a The array being sorted
    */
   public static <T extends Comparable<? super T>> void sort(T[] a){
     int n = a.length;
-    for (int i = 0; i < n; i++){
-      for (int j = i; j > 0 && less(a[j], a[j-1]); j--){
-        exchange(a, j, j-1);
+    int h = 1;
+    // finds the smallest increment <= floor(n/3)
+    while (h < n/3){
+      h = 3 * h + 1;  // 1, 4, 13, 40, ... 
+    }
+    // continuously h-sort the array ..., 40-sort, 13-sort, 4-sort, 1-sort
+    while (h >= 1){
+      for (int i = h; i < n; i++){
+        for (int j = i; j >= h && less(a[j], a[j-h]); j -= h){
+          exchange(a, j, j-h);
+        }
       }
+      h = h / 3;
     }
   }
 

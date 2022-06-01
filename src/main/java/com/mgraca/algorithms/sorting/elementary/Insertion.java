@@ -1,6 +1,6 @@
-package com.mgraca.algorithms.sorting;
+package com.mgraca.algorithms.sorting.elementary;
 
-public class Selection{
+public class Insertion{
   /**
    * Sorts the contents of a given array
    * @param a The array being sorted
@@ -8,13 +8,23 @@ public class Selection{
   public static <T extends Comparable<? super T>> void sort(T[] a){
     int n = a.length;
     for (int i = 0; i < n; i++){
-      int minIndex = i;
-      for (int j = i+1; j < n; j++){  // scan the array for the smallest value
-        if (less(a[j], a[minIndex])){ // swap i with the minIndex
-          minIndex = j;
-        }
+      for (int j = i; j > 0 && less(a[j], a[j-1]); j--){
+        exchange(a, j, j-1);
       }
-      exchange(a, i, minIndex);
+    }
+  }
+
+  /**
+   * Sorts the contents of a array, given bounds
+   * @param a The array being sorted
+   * @param lo  The lower index
+   * @param hi  The upper index
+   */
+  public static <T extends Comparable<? super T>> void sort(T[] a, int lo, int hi){
+    for (int i = lo; i < hi+1; i++){
+      for (int j = i; j > lo && less(a[j], a[j-1]); j--){
+        exchange(a, j, j-1);
+      }
     }
   }
 

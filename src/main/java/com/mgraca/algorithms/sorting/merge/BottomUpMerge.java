@@ -1,4 +1,4 @@
-package com.mgraca.algorithms.sorting;
+package com.mgraca.algorithms.sorting.merge;
 
 /*
  * Due to Java being unable to use generic variables under static contexts,
