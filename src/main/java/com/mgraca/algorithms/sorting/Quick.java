@@ -43,7 +43,7 @@ public class Quick{
         if (i == hi)
           break;
       }
-      while (less(v, a[--j])){  // scan j->lo
+      while (less(v, a[--j])){  // scan lo<-j 
         if (j == lo)
           break;
       }
@@ -85,7 +85,7 @@ public class Quick{
     int n = a.length;
     Random rng = new Random();
     for (int i = n-1; i > 0; i--){
-      int j = rng.nextInt(i+1); // [0, n), [0, n-1), ... , [0, n-n+3), [0, n-n+2)
+      int j = rng.nextInt(i+1); // [0, n-1], [0, n-2], ... , [0, 2], [0, 1]
       exchange(a, i, j);
     }
   }
