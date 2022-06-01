@@ -5,7 +5,7 @@ import com.mgraca.algorithms.sorting.elementary.Insertion;
 
 public class QuickInsertion{
   // cutoff for the size of the subarrays to begin insetion sort; [5,15]
-  private static int CUTOFF = 10; 
+  private static int CUTOFF = 5; 
 
   /**
    * Sorts the contents of a given array
