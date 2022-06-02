@@ -22,37 +22,26 @@ public class QuickThreeWay{
     if (hi <= lo){
       return;
     }
-    int j = partition(a, lo, hi); // place partitioning item in proper place
-    sort(a, lo, j-1);             // sort left of paritioned item
-    sort(a, j+1, hi);             // sort right of partitioned item
-  }
-
-  /**
-   * Partitions an array such that the elements to the left of the item are smaller and 
-   * the elements to the right are larger than it
-   * @param a The array containing the items to partition
-   * @param lo  The lower index of the items to partition
-   * @param hi  The upper index of the items to partition
-   * @return  The index containing the location of the partitioned item
-   */
-  private static <T extends Comparable<? super T>> int partition(T[] a, int lo, int hi){
-    int i = lo, j = hi+1;
+    int lt = lo;
+    int i = lo+1;
+    int gt = hi;
     T v = a[lo];
-    while (true){
-      while (less(a[++i], v)){  // scan i->hi
-        if (i == hi)
-          break;
+    
+    while (i <= gt){
+      int compare = a[i].compareTo(v);
+      if (compare < 0){
+        exchange(a, i++, lt++);
       }
-      while (less(v, a[--j])){  // scan lo<-j 
-        if (j == lo)
-          break;
+      else if (compare > 0){
+        exchange(a, i, gt--);
       }
-      if (i >= j)               // check for complete scan
-        break;
-      exchange(a, i, j);        
+      else{
+        i++;
+      }
     }
-    exchange(a, lo, j);
-    return j;
+                        // a[lt..gt] = v
+    sort(a, lo, lt-1);  // a[lo..lt-1] < v
+    sort(a, gt+1, hi);  // a[gt+1..hi] > v
   }
 
   /**

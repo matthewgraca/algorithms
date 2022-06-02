@@ -22,9 +22,43 @@ public class QuickMedianOfThree{
     if (hi <= lo){
       return;
     }
+
+    int mid = getMedian(a, lo, lo + (hi - lo) / 2, hi);
+    exchange(a, lo, mid);
+
     int j = partition(a, lo, hi); // place partitioning item in proper place
     sort(a, lo, j-1);             // sort left of paritioned item
     sort(a, j+1, hi);             // sort right of partitioned item
+  }
+
+  /**
+   * Finds the index containing the median of three elements of an array
+   * @param lo  The lower index
+   * @param mid The middle index
+   * @param hi  The upper index
+   * @return  The index containing the median value
+   */
+  protected static <T extends Comparable<? super T>> int getMedian(T[] a, int lo, int mid, int hi){
+    if (less(a[lo], a[mid])){ // reduce to 102, 201, 210
+      if (less(a[mid], a[hi]))
+        return mid;   // 012
+      else{
+        if (less(a[lo], a[hi]))
+          return hi;  // 021
+        else 
+          return lo;  // 120
+      }
+    }
+    else {  // 102, 201, 210
+      if (less(a[lo], a[hi]))
+        return lo;    // 102
+      else{ 
+        if (less(a[mid], a[hi]))
+          return hi;  // 201
+        else
+          return mid; // 210
+      }
+    }
   }
 
   /**

@@ -8,6 +8,60 @@ import java.util.Arrays;
 
 public class QuickMedianOfThreeTest{
   @Test
+  public void getsMedianFromPermutation1(){
+    Integer[] arr = {0,1,2};
+    int actual = QuickMedianOfThree.getMedian(arr, 0, 1, 2);
+    int expected = 1;
+    String msg = "Expected " + expected + ", returned " + actual;
+    assertTrue(msg, expected == actual);
+  }
+
+  @Test
+  public void getsMedianFromPermutation2(){
+    Integer[] arr = {0,2,1};
+    int actual = QuickMedianOfThree.getMedian(arr, 0, 1, 2);
+    int expected = 2;
+    String msg = "Expected " + expected + ", returned " + actual;
+    assertTrue(msg, expected == actual);
+  }
+
+  @Test
+  public void getsMedianFromPermutation3(){
+    Integer[] arr = {1,2,0};
+    int actual = QuickMedianOfThree.getMedian(arr, 0, 1, 2);
+    int expected = 0;
+    String msg = "Expected " + expected + ", returned " + actual;
+    assertTrue(msg, expected == actual);
+  }
+
+  @Test
+  public void getsMedianFromPermutation4(){
+    Integer[] arr = {1,0,2};
+    int actual = QuickMedianOfThree.getMedian(arr, 0, 1, 2);
+    int expected = 0;
+    String msg = "Expected " + expected + ", returned " + actual;
+    assertTrue(msg, expected == actual);
+  }
+
+  @Test
+  public void getsMedianFromPermutation5(){
+    Integer[] arr = {2,0,1};
+    int actual = QuickMedianOfThree.getMedian(arr, 0, 1, 2);
+    int expected = 2;
+    String msg = "Expected " + expected + ", returned " + actual;
+    assertTrue(msg, expected == actual);
+  }
+
+  @Test
+  public void getsMedianFromPermutation6(){
+    Integer[] arr = {2,1,0};
+    int actual = QuickMedianOfThree.getMedian(arr, 0, 1, 2);
+    int expected = 1;
+    String msg = "Expected " + expected + ", returned " + actual;
+    assertTrue(msg, expected == actual);
+  }
+
+  @Test
   public void alreadySorted(){
     Integer[] actual = new Integer[1000];
     Integer[] expected = new Integer[1000];
