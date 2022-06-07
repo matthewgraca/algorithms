@@ -54,8 +54,8 @@ public class MinPQ<Key extends Comparable<Key>>{
   }
 
   /**
-   * Returns the largest key
-   * @return  The largest key
+   * Returns the smallest key
+   * @return  The smallest key
    * @throws  NoSuchElementException if the priority queue is empty
    */
   public Key min(){
@@ -65,7 +65,7 @@ public class MinPQ<Key extends Comparable<Key>>{
   }
 
   /**
-   * Removes the largest key
+   * Removes the smallest key
    * @return  The key that was removed
    */
   public Key delMin(){
@@ -121,7 +121,7 @@ public class MinPQ<Key extends Comparable<Key>>{
   }
 
   /**
-   * Bottum-up reheapify
+   * Bottom-up reheapify
    * @param k The index of the current node
    */
   private void swim(int k){

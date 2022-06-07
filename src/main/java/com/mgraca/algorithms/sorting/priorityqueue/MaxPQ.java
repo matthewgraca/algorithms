@@ -121,7 +121,7 @@ public class MaxPQ<Key extends Comparable<Key>>{
   }
 
   /**
-   * Bottum-up reheapify
+   * Bottom-up reheapify
    * @param k The index of the current node
    */
   private void swim(int k){
