@@ -1,53 +1,47 @@
 package com.mgraca.algorithms.sorting.merge;
 
 /*
- * Due to Java being unable to use generic variables under static contexts,
- * it is necessary to pass the auxilliary array through the method.
- * The book provides an implementation which doesn't require passing the array; 
- * however, that would require the use of Comparable which would trigger 
- * compiler complaints about unchecked warnings. These warnings are probably 
- * safe to suppress, but I've chosen to maintain a consistent implementation.
+ * Cannot use T as a static variable in this context, so we defer to the 
+ * book's implementation of generics and suppress warnings for unchecked 
+ * call to compareTo()
  */
 public class Merge{
+  private static Comparable[] aux;
+
   /**
    * Sorts the contents of a given array
    * @param a The array being sorted
    */
-  public static <T extends Comparable<? super T>> void sort(T[] a){
+  public static void sort(Comparable[] a){
     int n = a.length;
-    @SuppressWarnings("unchecked")
-    T[] aux = (T[])new Comparable<?>[n];
-    sort(a, aux, 0, n-1);
+    aux = new Comparable[n];
+    sort(a, 0, n-1);
   }
 
   /**
    * Method responsible for the recursive calls of sort
    * @param a The array being sorted
-   * @param aux The auxilliary arrya supporting the sort
    * @param lo  The lower index of the array being sorted
    * @param hi  The upper index of the array being sorted
    */
-  private static <T extends Comparable<? super T>> void 
-  sort(T[] a, T[] aux, int lo, int hi){
+  private static void sort(Comparable[] a, int lo, int hi){
     if (hi <= lo){
       return;
     }
     int mid = lo + (hi-lo) / 2; // overflow safe method of taking an average
-    sort(a, aux, lo, mid);      // sort left
-    sort(a, aux, mid+1, hi);    // sort right
-    merge(a, aux, lo, mid, hi); // merge results
+    sort(a, lo, mid);      // sort left
+    sort(a, mid+1, hi);    // sort right
+    merge(a, lo, mid, hi); // merge results
   }
 
   /**
    * Takes two ordered arrays and combines them into one ordered array
    * @param a The array containing the two ordered arrays
-   * @param aux The auxilliary array assisting in the sort
    * @param lo  The lower index of the first array
    * @param mid The upper index of the first and lower index of the second array
    * @param hi  The upper index of the second array
    */
-  public static <T extends Comparable<? super T>> void 
-  merge(T[] a, T[] aux, int lo, int mid, int hi){
+  public static void merge(Comparable[] a, int lo, int mid, int hi){
     int i = lo, j = mid + 1;
     for (int k = lo; k <= hi; k++){
       aux[k] = a[k];
@@ -74,7 +68,9 @@ public class Merge{
    * @param w The other item being checked against
    * @return  True if v is smaller than w
    */
-  private static <T extends Comparable<? super T>> boolean less(T v, T w){
-    return v.compareTo(w) < 0;
+  private static boolean less(Comparable v, Comparable w){
+    @SuppressWarnings("unchecked")
+    boolean comp = v.compareTo(w) < 0;
+    return comp;
   }
 }
