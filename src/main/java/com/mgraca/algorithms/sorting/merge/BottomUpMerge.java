@@ -1,25 +1,24 @@
 package com.mgraca.algorithms.sorting.merge;
 
 /*
- * Due to Java being unable to use generic variables under static contexts,
- * it is necessary to pass the auxilliary array through the method.
- * The book provides an implementation which doesn't require passing the array; 
- * however, that would require the use of Comparable which would trigger 
- * compiler complaints about unchecked warnings. These warnings are probably 
- * safe to suppress, but I've chosen to maintain a consistent implementation.
+ * Cannot use T as a static variable in this context, so we defer to the
+ * book's implementaiton of generics and suppress warnings for unchecked 
+ * call to compareTo(), since we know only Comparable objects will be 
+ * passed
  */
 public class BottomUpMerge{
+  private static Comparable[] aux;
+
   /**
    * Sorts the contents of a given array
    * @param a The array being sorted
    */
-  public static <T extends Comparable<? super T>> void sort(T[] a){
+  public static void sort(Comparable[] a){
     int n = a.length;
-    @SuppressWarnings("unchecked")
-    T[] aux = (T[])new Comparable<?>[n];
+    aux = new Comparable[n];
     for (int len = 1; len < n; len *= 2){
       for (int lo = 0; lo < n-len; lo += len+len){
-        merge(a, aux, lo, lo+len-1, Math.min(lo+len+len-1, n-1));
+        merge(a, lo, lo+len-1, Math.min(lo+len+len-1, n-1));
       }
     }
   }
@@ -27,13 +26,11 @@ public class BottomUpMerge{
   /**
    * Takes two ordered arrays and combines them into one ordered array
    * @param a The array containing the two ordered arrays
-   * @param aux The auxilliary array assisting in the sort
    * @param lo  The lower index of the first array
    * @param mid The upper index of the first and lower index of the second array
    * @param hi  The upper index of the second array
    */
-  public static <T extends Comparable<? super T>> void 
-  merge(T[] a, T[] aux, int lo, int mid, int hi){
+  public static void merge(Comparable[] a, int lo, int mid, int hi){
     int i = lo, j = mid + 1;
     for (int k = lo; k <= hi; k++){
       aux[k] = a[k];
@@ -60,7 +57,10 @@ public class BottomUpMerge{
    * @param w The other item being checked against
    * @return  True if v is smaller than w
    */
-  private static <T extends Comparable<? super T>> boolean less(T v, T w){
-    return v.compareTo(w) < 0;
+  private static boolean less(Comparable v, Comparable w){
+    // guaranteed to be Comparable objects at this point
+    @SuppressWarnings("unchecked")
+    boolean comp = v.compareTo(w) < 0;
+    return comp;
   }
 }
