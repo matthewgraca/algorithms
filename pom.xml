@@ -63,7 +63,7 @@
               <manifest>
                 <addClasspath>true</addClasspath>
                 <classpathPrefix>lib/</classpathPrefix>
-                <mainClass>com.mgraca.algorithms.sorting.sortcompare.SortCompare</mainClass>
+                <mainClass>com.mgraca.algorithms.sorting.sortapps.California</mainClass>
               </manifest>
             </archive>
           </configuration>
