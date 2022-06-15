@@ -117,12 +117,11 @@ public class IndexMinPQ<Key extends Comparable<Key>>{
     if (isEmpty())
       throw new NoSuchElementException("Cannot delete the min key of an empty priority queue.");
     int min = pq[1];
-    exchange(1, n);
+    exchange(1, n--);
     sink(1);
     qp[min] = -1;
     keys[min] = null;
-    pq[n] = -1;
-    n--;
+    pq[n+1] = -1;
     return min;
   }
 

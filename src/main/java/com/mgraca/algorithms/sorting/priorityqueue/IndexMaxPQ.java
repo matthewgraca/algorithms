@@ -117,12 +117,11 @@ public class IndexMaxPQ<Key extends Comparable<Key>>{
     if (isEmpty())
       throw new NoSuchElementException("Cannot delete the max key of an empty priority queue.");
     int max = pq[1];
-    exchange(1, n);
+    exchange(1, n--);
     sink(1);
     qp[max] = -1;
     keys[max] = null;
-    pq[n] = -1;
-    n--;
+    pq[n+1] = -1;
     return max;
   }
 
