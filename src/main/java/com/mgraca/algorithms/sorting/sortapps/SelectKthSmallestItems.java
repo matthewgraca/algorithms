@@ -7,19 +7,30 @@ public class SelectKthSmallestItems{
    * Finds the kth smallest item in an array of keys
    * @param a The array being selected from
    * @param k The kth item of the array 
-   * @return  The item at k
+   * @return  The item at a[k]
    */
   public static <T extends Comparable<? super T>> T select(T[] a, int k){
-    return null;
+    shuffle(a);
+    int lo = 0, hi = a.length - 1;
+    while (hi > lo){
+      int j = partition(a, lo, hi); // let j be the partitioning index
+      if (j == k)     // if kth item is found, return it
+        return a[k];
+      else if (j > k) // if jth item is larger than kth item, check b/t lo and j-1 for k
+        hi = j - 1;
+      else if (j < k) // if jth item is smaller than kth item, check b/t j+1 and hi for k 
+        lo = j + 1;
+    }
+    return a[k];
   }
 
   /**
-   * Finds the median item in an array of keys
+   * Finds the median item in an array of keys, assuming an array of odd elements
    * @param a The array being selected from
    * @return  The median item
    */
   public static <T extends Comparable<? super T>> T selectMedian(T[] a){
-    return null;
+    return select(a, a.length/2);
   }
 
   /**
