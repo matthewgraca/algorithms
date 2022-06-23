@@ -20,6 +20,8 @@ public class SequentialSearchST<Key extends Comparable<Key>, Value> implements I
    * @return  The value associated with the given key; null if absent
    */
   public Value get(Key key){
+    if (key == null)
+      throw new IllegalArgumentException("Null argument not allowed");
     for (Node current = head; current != null; current = current.next){
       if (key.equals(current.key))
         return current.val; // search hit
@@ -34,6 +36,13 @@ public class SequentialSearchST<Key extends Comparable<Key>, Value> implements I
    * @param val The value being added
    */
   public void put(Key key, Value val){
+    if (key == null)
+      throw new IllegalArgumentException("Null argument not allowed");
+    // delete key from table if value is null
+    if (val == null){
+      delete(key);
+      return;
+    }
     // search for key; update if found, grow table if new
     for (Node current = head; current != null; current = current.next){
       if (key.equals(current.key)){
@@ -58,6 +67,16 @@ public class SequentialSearchST<Key extends Comparable<Key>, Value> implements I
    * @param key The key being removed from the table
    */
   public void delete(Key key){
+    if (key == null)
+      throw new IllegalArgumentException("Null argument not allowed");
+    head = delete(head, key);
+  }
+
+  /* 
+  // iterative solution:
+  public void delete(Key key){
+    if (key == null)
+      throw new IllegalArgumentException("Null argument not allowed");
     if (head == null) // exit if table is empty
       return;
     // check first key
@@ -78,6 +97,19 @@ public class SequentialSearchST<Key extends Comparable<Key>, Value> implements I
         return;
       }
     }
+  }
+  */
+
+  // deletes key in linked list beginning at node current 
+  private Node delete(Node current, Key key){
+    if (current == null)          // base case 1: search miss
+      return null;
+    if (key.equals(current.key)){ // base case 2: search hit
+      n--;
+      return current.next;
+    }
+    current.next = delete(current.next, key);
+    return current;
   }
 
 /******************************************************************************
