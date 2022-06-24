@@ -18,6 +18,7 @@ public class SequentialSearchST<Key extends Comparable<Key>, Value> implements I
    * Gets the value paired with a given key, null if the key is absent
    * @param key The key being searched for in the table
    * @return  The value associated with the given key; null if absent
+   * @throws IllegalArgumentException if the argument passed is null
    */
   public Value get(Key key){
     if (key == null)
@@ -34,6 +35,7 @@ public class SequentialSearchST<Key extends Comparable<Key>, Value> implements I
    * value is null
    * @param key The key being added
    * @param val The value being added
+   * @throws IllegalArgumentException if the argument passed is null
    */
   public void put(Key key, Value val){
     if (key == null)
@@ -65,6 +67,7 @@ public class SequentialSearchST<Key extends Comparable<Key>, Value> implements I
   /**
    * Removes the given key and its value from the table
    * @param key The key being removed from the table
+   * @throws IllegalArgumentException if the argument passed is null
    */
   public void delete(Key key){
     if (key == null)
