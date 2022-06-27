@@ -1,11 +1,20 @@
 package com.mgraca.algorithms.searching.symboltable;
 
 import java.util.NoSuchElementException;
+import java.lang.IllegalArgumentException;
 
 public class BinarySearchST<Key extends Comparable<Key>, Value>{
+  private static final int INIT_CAPACITY = 2;
   private Key[] keys;
   private Value[] vals;
   private int n;
+
+  /**
+   * Creates a symbol table with a default initial capacity
+   */
+  public BinarySearchST(){
+    this(INIT_CAPACITY);
+  }
 
   /**
    * Creates a symbol table with a given capacity
@@ -38,17 +47,52 @@ public class BinarySearchST<Key extends Comparable<Key>, Value>{
   public Value get(Key key){
     if (key == null)
       throw new IllegalArgumentException("Null argument not allowed");
-    return null;
+    if (isEmpty())
+      return null;
+    int i = rank(key);
+    if (i < n && keys[i].compareTo(key) == 0)
+      return vals[i];
+    else
+      return null;
   }
 
   /**
-   * Gets the number of keys less than the given key
+   * Gets the number of keys less than the given key, using binary search
    * @param key The key being checked
    * @return  The number of keys less than the given key
+   * @throws IllegalArgumentException if the argument passed is null
    */
   public int rank(Key key){
-    return 0;
+    if (key == null)
+      throw new IllegalArgumentException("Cannot find the rank of a null key");
+    int lo = 0, hi = n - 1;
+    while (lo <= hi){
+      int mid = lo + (hi - lo) / 2;
+      int compare = key.compareTo(keys[mid]);
+      if (compare < 0)
+        hi = mid - 1;
+      else if (compare > 0)
+        lo = mid + 1;
+      else
+        return mid;
+    }
+    return lo;
   }
+
+  /*Recursive version of binary search:
+  public int rank(Key key, int lo, int hi){
+    if (hi < lo)
+      return lo;
+    int mid = lo + (hi - lo) / 2;
+    int compare = key.compareTo(keys[mid]);
+    if (compare < 0)
+      return rank(key, lo, mid-1);
+    else if (compare > 0)
+      return rank(key, mid+1, hi);
+    else
+      return mid;
+  }
+  */
 
   /**
    * Puts the given key-value pair into the table; removes key from table if 
@@ -60,6 +104,31 @@ public class BinarySearchST<Key extends Comparable<Key>, Value>{
   public void put(Key key, Value val){
     if (key == null)
       throw new IllegalArgumentException("Null argument not allowed");
+    // delete pair if given a null value
+    if (val == null){
+      delete(key);
+      return;
+    }
+
+    int i = rank(key);
+
+    // if key is already in table, update value
+    if (i < n && keys[i].compareTo(key) == 0){
+      vals[i] = val;
+      return;
+    }
+
+    // otherwise, insert new key-value pair
+    if (n == keys.length)
+      resize(2*keys.length);
+    // shift right, make space for pair insertion
+    for (int j = n; j > i; j--){
+      keys[j] = keys[j-1];
+      vals[j] = vals[j-1];
+    }
+    keys[i] = key;
+    vals[i] = val;
+    n++;
   }
 
   /**
@@ -70,7 +139,26 @@ public class BinarySearchST<Key extends Comparable<Key>, Value>{
   public void delete(Key key){
     if (key == null)
       throw new IllegalArgumentException("Null argument not allowed");
-    //head = delete(head, key);
+    if (isEmpty())
+      return;
+    
+    int i = rank(key);
+
+    // if the key is not in the table, exit 
+    if (i == n || keys[i].compareTo(key) != 0)
+      return;
+    else{
+      // shift pairs to the left, overwriting the found key
+      for (int j = i; j < n-1; j++){
+        keys[j] = keys[j+1];
+        vals[j] = vals[j+1];
+      }
+      n--;
+      keys[n] = null;
+      vals[n] = null;
+      if (sizeIsOneFourthOfCapacity())
+        resize(keys.length/2);
+    }
   }
 
   /**
@@ -102,7 +190,9 @@ public class BinarySearchST<Key extends Comparable<Key>, Value>{
    * @throws IllegalArgumentException if the table does not contain a key of that rank
    */
   public Key select(int k){
-    return null;
+    if (k < 0 || k >= n)
+      throw new IllegalArgumentException("Argument out of range");
+    return keys[k];
   }
 
   /**
@@ -113,7 +203,13 @@ public class BinarySearchST<Key extends Comparable<Key>, Value>{
    * @throws IllegalArgumentException if the given key is null
    */
   public Key ceiling(Key key){
-    return null;
+    if (key == null)
+      throw new IllegalArgumentException("Cannot get the ceiling of a null key");
+    int i = rank(key);
+    if (i == n)
+      throw new NoSuchElementException("Argument is too large to find ceiling");
+    else
+      return keys[i];
   }
 
   /**
@@ -124,7 +220,17 @@ public class BinarySearchST<Key extends Comparable<Key>, Value>{
    * @throws IllegalArgumentException if the given key is null
    */
   public Key floor(Key key){
-    return null;
+    if (key == null)
+      throw new IllegalArgumentException("Cannot get the floor of a null key");
+    int i = rank(key);
+    // if a key is found that matches the floor, return it
+    if (i < n && keys[i].compareTo(key) == 0)
+      return keys[i];
+    // else return the value below the key
+    if (i == 0)
+      throw new NoSuchElementException("Argument is too small to find floor");
+    else
+      return keys[i-1];
   }
 
   /**
@@ -139,7 +245,7 @@ public class BinarySearchST<Key extends Comparable<Key>, Value>{
   }
 
 /******************************************************************************
- * Array resizing methods
+ * Array resizing helper methods
  *****************************************************************************/
 
   /**
@@ -147,7 +253,7 @@ public class BinarySearchST<Key extends Comparable<Key>, Value>{
    * @return true if the table is empty, false if otherwise
    */
   private boolean isEmpty(){
-    return true;
+    return n == 0;
   }
 
   /**
@@ -155,18 +261,18 @@ public class BinarySearchST<Key extends Comparable<Key>, Value>{
    * @return  True if the table size is 1/4th of its capacity
    */
   private boolean sizeIsOneFourthOfCapacity(){
-    return true;
+    return n > 0 && n == keys.length / 4;
   }
 
   /**
    * Resizes the capacity of the stack
-   * @param n The capacity of the new stack
+   * @param capacity  The capacity of the new stack
    */
-  private void resize(int n){
+  private void resize(int capacity){
     @SuppressWarnings("unchecked")
-    Key[] tempKeys = (Key[]) new Comparable[n];
+    Key[] tempKeys = (Key[]) new Comparable[capacity];
     @SuppressWarnings("unchecked")
-    Value[] tempValues = (Value[]) new Object[n];
+    Value[] tempValues = (Value[]) new Object[capacity];
     for (int i = 0; i < n; i++){
       tempKeys[i] = keys[i];
       tempValues[i] = vals[i];
@@ -174,5 +280,4 @@ public class BinarySearchST<Key extends Comparable<Key>, Value>{
     keys = tempKeys;
     vals = tempValues;
   }
-
 }
