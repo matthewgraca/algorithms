@@ -43,7 +43,22 @@ public class BST<Key extends Comparable<Key>, Value>{
    * @throws IllegalArgumentException if the given key is null
    */
   public Value get(Key key){
-    return null;
+    return get(root, key);
+  }
+
+  // get the key rooted at a given node
+  private Value get(Node node, Key key){
+    if (key == null)
+      throw new IllegalArgumentException("Cannot get null key from symbol table");
+    if (node == null) // base case 1: search miss
+      return null;
+    int cmp = key.compareTo(node.key);
+    if (cmp < 0)      // search left subtree
+      return get(node.left, key);
+    else if (cmp > 0) // search right subtree
+      return get(node.right, key);
+    else              // base case 2: seach hit
+      return node.val;
   }
 
   /**
@@ -53,7 +68,29 @@ public class BST<Key extends Comparable<Key>, Value>{
    * @throws IllegalArgumentException if the given key is null
    */
   public void put(Key key, Value val){
+    if (key == null)
+      throw new IllegalArgumentException("Cannot put null key into symbol table");
+    if (val == null){
+      delete(key);
+      return;
+    }
+    root = put(root, key, val);
+  }
 
+  // puts the key rooted at a given node
+  private Node put(Node node, Key key, Value val){
+    if (node == null) // base case 1: add new leaf
+      return new Node(key, val, 1);
+    int cmp = key.compareTo(node.key);
+    if (cmp < 0)      // put in left subtree
+      node.left = put(node.left, key, val);
+    else if (cmp > 0) // put in right subtree
+      node.right = put(node.right, key, val);
+    else              // base case 2: put at current node (update val)
+      node.val = val;
+    // update size
+    node.n = size(node.left) + size(node.right) + 1;
+    return node;
   }
 
   /**
