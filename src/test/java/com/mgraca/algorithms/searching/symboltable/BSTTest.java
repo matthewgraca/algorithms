@@ -199,4 +199,74 @@ public class BSTTest{
     BST<String, Integer> st = new BST<>();
     st.max();
   }
+
+  @Test
+  public void getCeilingOfManyItems(){
+    BST<String, Integer> st = new BST<>();
+    st.put("Apple", 3);
+    st.put("Banana", 4);
+    st.put("Cantaloupe", 1);
+    st.put("Durian", 2);
+    String expected = "Durian";
+    String actual = st.ceiling("Cranberry");
+    String msg = "Expected " + expected + ", returned " + actual;
+    assertTrue(msg, expected == actual);
+  }
+
+  @Test(expected=NoSuchElementException.class)
+  public void ceilingOfEmptyTableThrowsException(){
+    BST<String, Integer> st = new BST<>();
+    st.ceiling("Apple");
+  }
+
+  @Test(expected=IllegalArgumentException.class)
+  public void ceilingOfNullKeyThrowsException(){
+    BST<String, Integer> st = new BST<>();
+    st.ceiling(null);
+  }
+
+  @Test(expected=NoSuchElementException.class)
+  public void ceilingOfTableWithItemsOnlyLessThanItThrowsException(){
+    BST<String, Integer> st = new BST<>();
+    st.put("Apple", 3);
+    st.put("Banana", 4);
+    st.put("Cantaloupe", 1);
+    st.put("Durian", 2);
+    st.ceiling("Eggplant");
+  }
+
+  @Test
+  public void getFloorOfManyItems(){
+    BST<String, Integer> st = new BST<>();
+    st.put("Apple", 3);
+    st.put("Banana", 4);
+    st.put("Cantaloupe", 1);
+    st.put("Durian", 2);
+    String expected = "Apple";
+    String actual = st.floor("Baa");
+    String msg = "Expected " + expected + ", returned " + actual;
+    assertTrue(msg, expected == actual);
+  }
+
+  @Test(expected=NoSuchElementException.class)
+  public void floorOfEmptyTableThrowsException(){
+    BST<String, Integer> st = new BST<>();
+    st.floor("Apple");
+  }
+
+  @Test(expected=IllegalArgumentException.class)
+  public void floorOfNullKeyThrowsException(){
+    BST<String, Integer> st = new BST<>();
+    st.floor(null);
+  }
+
+  @Test(expected=NoSuchElementException.class)
+  public void floorOfTableWithItemsOnlyGreaterThanItThrowsException(){
+    BST<String, Integer> st = new BST<>();
+    st.put("Apple", 3);
+    st.put("Banana", 4);
+    st.put("Cantaloupe", 1);
+    st.put("Durian", 2);
+    st.floor("Aardvark");
+  }
 }

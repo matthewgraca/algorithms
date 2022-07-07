@@ -134,9 +134,31 @@ public class BST<Key extends Comparable<Key>, Value>{
    * @param key the key being compared to
    * @return the smallest key equal to or greater than the given key
    * @throws IllegalArgumentException if the given key is null
+   * @throws NoSuchElementException if the table is empty or all the keys in the table are smaller 
    */
   public Key ceiling(Key key){
-    return null;
+    if (key == null)
+      throw new IllegalArgumentException("Cannot get the ceiling of a null key");
+    if (isEmpty())
+      throw new NoSuchElementException("Cannot get the floor of an empty symbol table");
+    Node x = ceiling(root, key);
+    if (x == null)
+      throw new NoSuchElementException("All keys are less than the given key");
+    return x.key;
+  }
+
+  private Node ceiling(Node x, Key key){
+    if (x == null)  // search miss
+      return null;
+    int cmp = key.compareTo(x.key);
+    if (cmp == 0) // search hit - same key
+      return x;
+    if (cmp > 0)  // larger key available, keep searching
+      return ceiling(x.right, key);
+    // overshoot; refine search
+    Node t = ceiling(x.left, key);
+    if (t != null) return t;
+    else return x;
   }
 
   /**
@@ -144,9 +166,30 @@ public class BST<Key extends Comparable<Key>, Value>{
    * @param key the key being compared to
    * @return the largest key equal to or less than the given key
    * @throws IllegalArgumentException if the given key is null
+   * @throws NoSuchElementException if the table is empty or all the keys in the table are larger 
    */
   public Key floor(Key key){
-    return null;
+    if (key == null)
+      throw new IllegalArgumentException("Cannot get the floor of a null key");
+    if (isEmpty())
+      throw new NoSuchElementException("Cannot get the floor of an empty symbol table");
+    Node x = floor(root, key);
+    if (x == null)
+      throw new NoSuchElementException("All keys are greater than the given key");
+    return x.key;
+  }
+
+  private Node floor(Node x, Key key){
+    if (x == null)
+      return null;
+    int cmp = key.compareTo(x.key);
+    if (cmp == 0)
+      return x;
+    if (cmp < 0)
+      return floor(x.left, key);
+    Node t = floor(x.right, key);
+    if (t != null) return t;
+    else return x;
   }
 
   /**
