@@ -96,17 +96,37 @@ public class BST<Key extends Comparable<Key>, Value>{
   /**
    * Gets the max key value in the symbol table
    * @return the max key value in the symbol table
+   * @throws NoSuchElementException if the table is empty
    */
   public Key max(){
-    return null;
+    if (isEmpty()) 
+      throw new NoSuchElementException("Cannot get the max of an empty table");
+    Node x = max(root);
+    return x.key;
+  }
+
+  private Node max(Node x){
+    if (x.right == null)
+      return x;
+    return max(x.right);
   }
 
   /**
    * Gets the min key value in the symbol table
    * @return the min key value in the symbol table
+   * @throws NoSuchElementException if the table is empty
    */
   public Key min(){
-    return null;
+    if (isEmpty())
+      throw new NoSuchElementException("Cannot get the min of an empty table");
+    Node x = min(root);
+    return x.key;
+  }
+
+  private Node min(Node x){
+    if (x.left == null)
+      return x;
+    return min(x.left);
   }
 
   /**
@@ -155,7 +175,32 @@ public class BST<Key extends Comparable<Key>, Value>{
    * @throws IllegalArgumentException if the given key is null
    */
   public void delete(Key key){
+    if (key == null)
+      throw new IllegalArgumentException("Cannot delete null key");
+    root = delete(root, key);
+  }
 
+  private Node delete(Node node, Key key){
+    if (node == null) // base case 1: node not found
+      return null;
+    int cmp = key.compareTo(node.key);
+    if (cmp < 0)
+      node.left = delete(node.left, key);
+    else if (cmp > 0)
+      node.right = delete(node.right, key);
+    else{ // base case 2: node found
+      if (node.right == null) // 2a: no right child; replace with left tree 
+        return node.left;     
+      if (node.left == null)  // 2b: no left child; replace with right tree 
+        return node.right;    
+      // 2c: has both children - replace with minimum node in right subtree
+      Node tree = node;
+      node = min(tree.right);
+      node.right = deleteMin(tree.right);
+      node.left = tree.left;
+    }
+    node.n = size(node.left) + size(node.right) + 1;
+    return node;
   }
 
   /**
@@ -163,7 +208,17 @@ public class BST<Key extends Comparable<Key>, Value>{
    * @throws NoSuchElementException if the symbol table is empty
    */
   public void deleteMin(){
+    if (isEmpty())
+      throw new NoSuchElementException("Canno delete the minimum of an empty table");
+    root = deleteMin(root);
+  }
 
+  private Node deleteMin(Node x){
+    if (x.left == null)
+      return x.right;
+    x.left = deleteMin(x.left);
+    x.n = size(x.left) + size(x.right) + 1;
+    return x;
   }
 
   /**
@@ -172,5 +227,9 @@ public class BST<Key extends Comparable<Key>, Value>{
    */
   public void deleteMax(){
 
+  }
+
+  private boolean isEmpty(){
+    return size() == 0;
   }
 }

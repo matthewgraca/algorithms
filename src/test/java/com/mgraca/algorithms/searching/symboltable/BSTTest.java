@@ -2,6 +2,7 @@ package com.mgraca.algorithms.searching.symboltable;
 
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
+import java.util.NoSuchElementException;
 
 public class BSTTest{
   @Test
@@ -107,7 +108,7 @@ public class BSTTest{
     BST<String, Integer> st = new BST<>();
     st.put("Banana", 4);
     st.delete("Apple");
-    assertTrue(st.size() == 1);
+    assertTrue("Expected size = 1; returned size = " + st.size(), st.size() == 1);
   }
 
   @Test
@@ -115,7 +116,8 @@ public class BSTTest{
     BST<String, Integer> st = new BST<>();
     st.put("Banana", 4);
     st.delete("Banana");
-    assertTrue(st.size() == 0 && st.get("Banana") == null);
+    assertTrue("Item was not removed", st.get("Banana") == null);
+    assertTrue("Expected size = 0, returned size = " + st.size(), st.size() == 0);
   }
 
   @Test
@@ -150,5 +152,51 @@ public class BSTTest{
                 st.get("Banana") == null &&
                 st.get("Cantaloupe") == null &&
                 st.get("Durian") == null);
+  }
+
+  @Test
+  public void minGetsMinimumOfManyItems(){
+    BST<String, Integer> st = new BST<>();
+    st.put("Apple", 3);
+    st.put("Banana", 4);
+    st.put("Cantaloupe", 1);
+    st.put("Durian", 2);
+    assertTrue("Expected Apple, returned " + st.min(), st.min() == "Apple");
+  }
+
+  @Test
+  public void minOfTreeWithOneNodeReturnsThatNode(){
+    BST<String, Integer> st = new BST<>();
+    st.put("Apple", 3);
+    assertTrue(st.min() == "Apple");
+  }
+
+  @Test(expected=NoSuchElementException.class)
+  public void minOfEmptyTreeThrowsException(){
+    BST<String, Integer> st = new BST<>();
+    st.min();
+  }
+
+  @Test
+  public void maxGetsMaximumOfManyItems(){
+    BST<String, Integer> st = new BST<>();
+    st.put("Apple", 3);
+    st.put("Banana", 4);
+    st.put("Cantaloupe", 1);
+    st.put("Durian", 2);
+    assertTrue("Expected Durian, returned " + st.max(), st.max() == "Durian");
+  }
+
+  @Test
+  public void maxOfTreeWithOneNodeReturnsThatNode(){
+    BST<String, Integer> st = new BST<>();
+    st.put("Apple", 3);
+    assertTrue(st.max() == "Apple");
+  }
+
+  @Test(expected=NoSuchElementException.class)
+  public void maxOfEmptyTreeThrowsException(){
+    BST<String, Integer> st = new BST<>();
+    st.max();
   }
 }
