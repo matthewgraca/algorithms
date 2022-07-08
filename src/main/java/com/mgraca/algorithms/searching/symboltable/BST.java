@@ -199,7 +199,22 @@ public class BST<Key extends Comparable<Key>, Value>{
    * @throws IllegalArgumentException if the given rank is not between 0 and n-1
    */
   public Key select(int rank){
-    return null;
+    if (rank < 0 || rank >= size())
+      throw new IllegalArgumentException("Rank parameter must be [0," + size() + "-1]");
+    Node x = select(root, rank);
+    return x.key;
+  }
+
+  private Node select(Node x, int k){
+    if (x == null)
+      return null;
+    int t = size(x.left); // num of keys smaller than the current key
+    if (t > k)
+      return select(x.left, k);
+    else if (t < k)
+      return select(x.right, k-t-1);  // k-t-1 = rank to find in right subtree
+    else
+      return x;
   }
 
   /**
@@ -209,7 +224,19 @@ public class BST<Key extends Comparable<Key>, Value>{
    * @throws IllegalArgumentException if the given key is null
    */
   public int rank(Key key){
-    return 0;
+    return rank(key, root);
+  }
+
+  private int rank(Key key, Node x){
+    if (x == null)
+      return 0;
+    int cmp = key.compareTo(x.key);
+    if (cmp < 0)
+      return rank(key, x.left);
+    else if (cmp > 0)
+      return 1 + size(x.left) + rank(key, x.right);
+    else
+      return size(x.left);
   }
 
   /**
@@ -252,7 +279,7 @@ public class BST<Key extends Comparable<Key>, Value>{
    */
   public void deleteMin(){
     if (isEmpty())
-      throw new NoSuchElementException("Canno delete the minimum of an empty table");
+      throw new NoSuchElementException("Cannot delete the minimum of an empty table");
     root = deleteMin(root);
   }
 
@@ -269,7 +296,17 @@ public class BST<Key extends Comparable<Key>, Value>{
    * @throws NoSuchElementException if the symbol table is empty
    */
   public void deleteMax(){
+    if (isEmpty())
+      throw new NoSuchElementException("Cannot delete the maximum of an empty table");
+    root = deleteMax(root);
+  }
 
+  private Node deleteMax(Node x){
+    if (x.right == null)
+      return x.left;
+    x.right = deleteMax(x.right);
+    x.n = size(x.left) + size(x.right) + 1;
+    return x;
   }
 
   private boolean isEmpty(){

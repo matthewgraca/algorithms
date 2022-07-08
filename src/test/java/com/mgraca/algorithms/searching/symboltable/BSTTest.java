@@ -269,4 +269,89 @@ public class BSTTest{
     st.put("Durian", 2);
     st.floor("Aardvark");
   }
+
+  @Test(expected=IllegalArgumentException.class)
+  public void selectBelowRangeThrowsException(){
+    BST<String, Integer> st = new BST<>();
+    st.put("Apple", 3);
+    st.put("Banana", 4);
+    st.put("Cantaloupe", 1);
+    st.put("Durian", 2);
+    st.select(-1);
+  }
+
+  public void selectAfterRangeThrowsException(){
+    BST<String, Integer> st = new BST<>();
+    st.put("Apple", 3);
+    st.put("Banana", 4);
+    st.put("Cantaloupe", 1);
+    st.put("Durian", 2);
+    st.select(5);
+  }
+  @Test
+  public void selectGetsProperKey(){
+    BST<String, Integer> st = new BST<>();
+    st.put("Apple", 3);
+    st.put("Banana", 4);
+    st.put("Cantaloupe", 1);
+    st.put("Durian", 2);
+    assertTrue(st.select(2) == "Cantaloupe");
+  }
+
+  @Test
+  public void rankOfEmptyTableReturns0(){
+    BST<String, Integer> st = new BST<>();
+    assertTrue(st.rank("A") == 0);
+  }
+
+  @Test
+  public void rankOfKeyNotInTableReturns0(){
+    BST<String, Integer> st = new BST<>();
+    st.put("Banana", 4);
+    assertTrue(st.rank("A") == 0);
+  }
+
+  @Test
+  public void rankOfFilledTableReturnsProperValue(){
+    BST<String, Integer> st = new BST<>();
+    st.put("Apple", 3);
+    st.put("Banana", 4);
+    st.put("Cantaloupe", 1);
+    st.put("Durian", 2);
+    assertTrue(st.rank("Cantaloupe") == 2);
+  }
+
+  @Test(expected=NoSuchElementException.class)
+  public void deleteMinFromEmptyTableThrowsException(){
+    BST<String, Integer> st = new BST<>();
+    st.deleteMin();
+  }
+
+  @Test
+  public void deleteMinFromFilledTableSuccessfully(){
+    BST<String, Integer> st = new BST<>();
+    st.put("Apple", 3);
+    st.put("Banana", 4);
+    st.put("Cantaloupe", 1);
+    st.put("Durian", 2);
+    st.deleteMin();
+    assertTrue(st.min() != "Apple");
+  }
+
+  @Test(expected=NoSuchElementException.class)
+  public void deleteMaxFromEmptyTableThrowsException(){
+    BST<String, Integer> st = new BST<>();
+    st.deleteMax();
+  }
+
+  @Test
+  public void deleteMaxFromFilledTableSuccessfully(){
+    BST<String, Integer> st = new BST<>();
+    st.put("Apple", 3);
+    st.put("Banana", 4);
+    st.put("Cantaloupe", 1);
+    st.put("Durian", 2);
+    st.deleteMax();
+    assertTrue(st.max() != "Durian");
+  }
 }
