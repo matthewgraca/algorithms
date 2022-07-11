@@ -1,4 +1,4 @@
-package com.mgraca.algorithms.searching.symboltable;
+package com.mgraca.algorithms.searching.symboltable.binarysearchtree;
 
 import java.lang.IllegalArgumentException;
 import java.util.NoSuchElementException;

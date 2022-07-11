@@ -1,4 +1,4 @@
-package com.mgraca.algorithms.searching.symboltable;
+package com.mgraca.algorithms.searching.symboltable.binarysearchtree;
 
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
