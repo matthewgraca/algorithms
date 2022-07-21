@@ -65,6 +65,18 @@ public class SequentialSearchST<Key extends Comparable<Key>, Value> implements I
   }
 
   /**
+   * Checks if the table contains a specified key
+   * @param key the key
+   * @return true if this table contains the key; fals if not
+   * @throws IllegalArgumentException if the key is null
+   */
+  public boolean contains(Key key){
+    if (key == null)
+      throw new IllegalArgumentException("Cannot find a null key");
+    return get(key) != null;
+  }
+
+  /**
    * Removes the given key and its value from the table
    * @param key The key being removed from the table
    * @throws IllegalArgumentException if the argument passed is null
