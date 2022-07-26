@@ -161,6 +161,7 @@ public class SET<Key extends Comparable<Key>> implements Iterable<Key>{
       throw new IllegalArgumentException("Cannot intersect with null");
     SET<Key> z = new SET<Key>();
     // check using smaller set for less comparisons 
+    // avg search cost = m*logbase2(n), so m < n costs less
     if (this.size() < that.size()){
       for (Key x : this.set){
         if (that.contains(x))
