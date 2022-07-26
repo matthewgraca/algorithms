@@ -28,6 +28,7 @@ public class DeDup{
           System.out.print(key + " ");
         }
       }
+      sc.close();
       System.out.println();
     }
     catch (FileNotFoundException e){
