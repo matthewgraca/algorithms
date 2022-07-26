@@ -87,6 +87,18 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value>{
   }
 
   /**
+   * Checks if the table contains a given key
+   * @param key the key
+   * @return true if the table contains the key, false if not
+   * @throws IllegalArgumentException if the key is null
+   */
+  public boolean contains(Key key){
+    if (key == null)
+      throw new IllegalArgumentException("Cannot search for a null key");
+    return get(key) != null;
+  }
+
+  /**
    * Gets the number of items in the table
    * @return  the number of items in the table
    */
