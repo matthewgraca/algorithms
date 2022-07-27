@@ -66,7 +66,7 @@
               <manifest>
                 <addClasspath>true</addClasspath>
                 <classpathPrefix>lib/</classpathPrefix>
-                <mainClass>com.mgraca.algorithms.searching.searchapps.LookupCSV</mainClass>
+                <mainClass>com.mgraca.algorithms.searching.searchapps.Concordance</mainClass>
               </manifest>
             </archive>
           </configuration>
