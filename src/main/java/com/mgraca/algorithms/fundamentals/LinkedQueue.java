@@ -1,8 +1,9 @@
 package com.mgraca.algorithms.fundamentals;
 
 import java.util.NoSuchElementException;
+import java.util.Iterator;
 
-public class LinkedQueue<T>{
+public class LinkedQueue<T> implements Iterable<T>{
   private Node head;
   private Node tail;
   private int size;
@@ -91,4 +92,27 @@ public class LinkedQueue<T>{
   public int size(){
     return size;
   }
+
+  /****************************************************************************
+   * Implement iterator for linked queue
+   ***************************************************************************/
+   @Override
+   public Iterator<T> iterator(){
+     return new ListIterator();
+   }
+
+   private class ListIterator implements Iterator<T>{
+     private Node current = head;
+     public boolean hasNext(){
+       return current != null;
+     }
+
+     public T next(){
+       T item = current.data;
+       current = current.next;
+       return item;
+     }
+
+     public void remove(){}
+   }
 }
