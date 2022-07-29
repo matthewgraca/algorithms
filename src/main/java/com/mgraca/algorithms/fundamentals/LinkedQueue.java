@@ -89,6 +89,6 @@ public class LinkedQueue<T>{
    * @return  The size of the queue
    */
   public int size(){
-    return 0;
+    return size;
   }
 }
