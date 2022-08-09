@@ -1,8 +1,9 @@
 package com.mgraca.algorithms.fundamentals;
 
 import java.util.EmptyStackException;
+import java.util.Iterator;
 
-public class LinkedStack<T>{
+public class LinkedStack<T> implements Iterable<T>{
   private Node head;
   private int size;
 
@@ -69,10 +70,35 @@ public class LinkedStack<T>{
       return temp;
     }
   }
+
   /**
    * Removes all entries from the stack
    */
   public void clear(){
     head = null;
+  }
+
+  /*****************************************************************************
+   * Iterator overloading 
+   ****************************************************************************/
+
+  @Override
+  public Iterator<T> iterator(){
+    return new ListIterator();
+  }
+
+  private class ListIterator implements Iterator<T>{
+    private Node current = head;     
+    public boolean hasNext(){
+      return current != null;
+    }
+
+    public T next(){
+      T item = current.data;
+      current = current.next;
+      return item;
+    }
+
+    public void remove(){}
   }
 }
