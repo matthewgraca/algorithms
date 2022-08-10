@@ -4,7 +4,6 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import java.util.Arrays;
-import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -24,9 +23,8 @@ public class DepthFirstSearchTest{
 
   @Test
   public void properVisitOrderOnABalancedTree(){
-    ArrayList<Integer> visitOrder = 
-      new ArrayList<>(Arrays.asList(0, 1, 3, 7, 8, 4, 9, 2, 5, 6));
-    Graph g = new Graph(visitOrder.size()); 
+    int[] visitOrder = {0, 1, 3, 7, 8, 4, 9, 2, 5, 6};
+    Graph g = new Graph(visitOrder.length); 
     g.addEdge(0, 2);
     g.addEdge(0, 1);
     g.addEdge(1, 4);
@@ -38,17 +36,16 @@ public class DepthFirstSearchTest{
     g.addEdge(4, 9);
     DepthFirstSearch dfs = new DepthFirstSearch(g, 0);
     String msg = 
-      "\nExpected " + visitOrder.toString() + 
+      "\nExpected " + Arrays.toString(visitOrder) + 
       "\nReturned " + dfs.visitOrder();
-    assertTrue(msg, dfs.visitOrder().equals(visitOrder.toString()));
-    assertTrue(dfs.count() == visitOrder.size());
+    assertTrue(msg, dfs.visitOrder().equals(Arrays.toString(visitOrder)));
+    assertTrue(dfs.count() == visitOrder.length);
   }
   
   @Test
   public void properVisitOrderOnUnbalancedTree(){
-    ArrayList<Integer> visitOrder =
-      new ArrayList<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9));
-    Graph g = new Graph(visitOrder.size());
+    int[] visitOrder = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    Graph g = new Graph(visitOrder.length);
     g.addEdge(0, 9);
     g.addEdge(0, 1);
     g.addEdge(1, 2);
@@ -62,22 +59,21 @@ public class DepthFirstSearchTest{
     String msg = 
       "\nExpected " + visitOrder.toString() + 
       "\nReturned " + dfs.visitOrder();
-    assertTrue(msg, dfs.visitOrder().equals(visitOrder.toString()));
-    assertTrue(dfs.count() == visitOrder.size());
+    assertTrue(msg, dfs.visitOrder().equals(Arrays.toString(visitOrder)));
+    assertTrue(dfs.count() == visitOrder.length);
   }
 
   @Test
   public void properVisitOrderOnAGeneralGraph(){
-    ArrayList<Integer> visitOrder = 
-      new ArrayList<>(Arrays.asList(0, 2, 1, 3, 5, 4));
+    int[] visitOrder = {0, 2, 1, 3, 5, 4};
     try{
       Graph g = new Graph(new Scanner(new File("data/graphTest/tinyCG.txt")));
       DepthFirstSearch dfs = new DepthFirstSearch(g, 0);
       String msg = 
-        "\nExpected " + visitOrder.toString() + 
+        "\nExpected " + Arrays.toString(visitOrder) + 
         "\nReturned " + dfs.visitOrder();
-      assertTrue(msg, dfs.visitOrder().equals(visitOrder.toString()));
-      assertTrue(dfs.count() == visitOrder.size());
+      assertTrue(msg, dfs.visitOrder().equals(Arrays.toString(visitOrder)));
+      assertTrue(dfs.count() == visitOrder.length);
     }
     catch (FileNotFoundException e){
       e.printStackTrace();

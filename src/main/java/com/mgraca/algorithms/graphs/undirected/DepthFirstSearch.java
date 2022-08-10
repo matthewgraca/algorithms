@@ -1,11 +1,11 @@
 package com.mgraca.algorithms.graphs.undirected;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 
 public class DepthFirstSearch{
   private boolean[] marked; // is there an s-v path?
   private int count;        // number of vertices connected to s
-  private ArrayList<Integer> visitOrder;  // dfs visit order (for testing)
+  private int[] visitOrder; // dfs visit order for testing
 
   /**
    * Conducts depth-first search on a given graph and source vertex
@@ -15,15 +15,15 @@ public class DepthFirstSearch{
    */
   public DepthFirstSearch(Graph g, int s){
     marked = new boolean[g.V()];
-    visitOrder = new ArrayList<Integer>();
+    visitOrder = new int[g.V()];
     validateVertex(s);
     dfs(g, s);
   }
 
   // conducts recursive depth-first search on a given graph and source vertex
   private void dfs(Graph g, int v){
-    visitOrder.add(v);
     marked[v] = true;
+    visitOrder[count] = v;
     count++;
     for (int w : g.adj(v)){
       if (!marked[w])
@@ -62,7 +62,6 @@ public class DepthFirstSearch{
    * @return a string of the visit order of the search
    */
   public String visitOrder(){
-    return visitOrder.toString();
+    return Arrays.toString(visitOrder);
   }
-
 }
