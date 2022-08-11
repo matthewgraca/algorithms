@@ -8,17 +8,17 @@ import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-public class BreadthFirstSearchTest{
+public class BreadthFirstPathsTest{
   @Test(expected=IllegalArgumentException.class)
   public void vertexBelowRangeThrowsException(){
     Graph g = new Graph(3);
-    BreadthFirstSearch bfs = new BreadthFirstSearch(g, -1);
+    BreadthFirstPaths bfs = new BreadthFirstPaths(g, -1);
   }
 
   @Test(expected=IllegalArgumentException.class)
   public void vertexAboveRangeThrowsException(){
     Graph g = new Graph(3);
-    BreadthFirstSearch bfs = new BreadthFirstSearch(g, 3);
+    BreadthFirstPaths bfs = new BreadthFirstPaths(g, 3);
   }
 
   @Test
@@ -34,7 +34,7 @@ public class BreadthFirstSearchTest{
     g.addEdge(3, 8);
     g.addEdge(3, 7);
     g.addEdge(4, 9);
-    BreadthFirstSearch bfs = new BreadthFirstSearch(g, 0);
+    BreadthFirstPaths bfs = new BreadthFirstPaths(g, 0);
     int i = 0;
     for (int v : bfs.pathTo(9)){
       assertTrue( "Expected " + expected[i] + ", returned " + v, 
@@ -56,7 +56,7 @@ public class BreadthFirstSearchTest{
     g.addEdge(5, 6);
     g.addEdge(6, 7);
     g.addEdge(7, 8);
-    BreadthFirstSearch bfs = new BreadthFirstSearch(g, 0);
+    BreadthFirstPaths bfs = new BreadthFirstPaths(g, 0);
     int i = 0;
     for (int v : bfs.pathTo(9)){
       assertTrue( "Expected " + expected[i] + ", returned " + v, 
@@ -70,7 +70,7 @@ public class BreadthFirstSearchTest{
     int[] expected = {0, 2, 3};
     try{
       Graph g = new Graph(new Scanner(new File("data/graphTest/tinyCG.txt")));
-      BreadthFirstSearch bfs = new BreadthFirstSearch(g, 0);
+      BreadthFirstPaths bfs = new BreadthFirstPaths(g, 0);
       int i = 0;
       for (int v : bfs.pathTo(3)){
         assertTrue( "Expected " + expected[i] + ", returned " + v, 
@@ -82,5 +82,4 @@ public class BreadthFirstSearchTest{
       e.printStackTrace();
     }
   }
-
 }

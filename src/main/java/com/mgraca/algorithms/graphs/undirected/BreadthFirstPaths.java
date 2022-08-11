@@ -3,7 +3,7 @@ package com.mgraca.algorithms.graphs.undirected;
 import com.mgraca.algorithms.fundamentals.LinkedQueue;
 import com.mgraca.algorithms.fundamentals.LinkedStack;
 
-public class BreadthFirstSearch{
+public class BreadthFirstPaths{
   private boolean[] marked;
   private int[] edgeTo;
   private final int s;
@@ -14,7 +14,7 @@ public class BreadthFirstSearch{
    * @param s the source vertex
    * @throws IllegalArgumentException if the source is out of range
    */
-  public BreadthFirstSearch(Graph g, int s){
+  public BreadthFirstPaths(Graph g, int s){
     marked = new boolean[g.V()];
     edgeTo = new int[g.V()];
     validateVertex(s);
