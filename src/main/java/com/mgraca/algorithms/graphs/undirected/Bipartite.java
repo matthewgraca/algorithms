@@ -1,5 +1,8 @@
 package com.mgraca.algorithms.graphs.undirected;
 
+/**
+ * Checks if a graph is two-colorable
+ */
 public class Bipartite{
   private boolean[] marked;
   private boolean[] color;

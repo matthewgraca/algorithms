@@ -1,5 +1,8 @@
 package com.mgraca.algorithms.graphs.undirected;
 
+/**
+ * Checks for cycles; assumes no self-loops or parallel edges
+ */
 public class Cycle{
   private boolean[] marked;
   private boolean hasCycle;
