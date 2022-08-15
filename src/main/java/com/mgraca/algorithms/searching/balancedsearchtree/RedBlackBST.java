@@ -2,6 +2,7 @@ package com.mgraca.algorithms.searching.balancedsearchtree;
 
 import java.lang.IllegalArgumentException;
 import java.util.NoSuchElementException;
+import com.mgraca.algorithms.fundamentals.LinkedQueue;
 
 public class RedBlackBST<Key extends Comparable<Key>, Value>{
   private Node root;
@@ -482,5 +483,38 @@ public class RedBlackBST<Key extends Comparable<Key>, Value>{
     else
       return size(x.left);
   }
+  
+  /****************************************************************************
+   * Iterable
+   ***************************************************************************/
 
+  public Iterable<Key> keys(){
+    if (isEmpty())
+      return new LinkedQueue<Key>();
+    return keys(min(), max());
+  }
+
+  public Iterable<Key> keys(Key lo, Key hi){
+    if (lo == null)
+      throw new IllegalArgumentException("First argument is null");
+    if (hi == null)
+      throw new IllegalArgumentException("Second argument is null");
+
+    LinkedQueue<Key> queue = new LinkedQueue<>();
+    keys(root, queue, lo, hi);
+    return queue;
+  }
+
+  private void keys(Node x, LinkedQueue<Key> queue, Key lo, Key hi){
+    if (x == null)
+      return;
+    int cmplo = lo.compareTo(x.key);
+    int cmphi = hi.compareTo(x.key);
+    if (cmplo < 0)
+      keys(x.left, queue, lo, hi);
+    if (cmplo <= 0 && cmphi >= 0)
+      queue.enqueue(x.key);
+    if (cmphi > 0)
+      keys(x.right, queue, lo, hi);
+  }
 }
