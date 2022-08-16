@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.NoSuchElementException;
 
 public class BreadthFirstPathsTest{
   @Test(expected=IllegalArgumentException.class)
@@ -77,6 +78,59 @@ public class BreadthFirstPathsTest{
                     v == expected[i]);
         i++;
       }
+    }
+    catch (FileNotFoundException e){
+      e.printStackTrace();
+    }
+  }
+
+  @Test
+  public void properDistanceFoundForBalancedTree(){
+    Graph g = new Graph(10); 
+    g.addEdge(0, 2);
+    g.addEdge(0, 1);
+    g.addEdge(1, 4);
+    g.addEdge(1, 3);
+    g.addEdge(2, 6);
+    g.addEdge(2, 5);
+    g.addEdge(3, 8);
+    g.addEdge(3, 7);
+    g.addEdge(4, 9);
+    BreadthFirstPaths bfs = new BreadthFirstPaths(g, 0);
+    int expected = 3;
+    int actual = bfs.distTo(9);
+    String msg = "Expected: " + expected + ", returned: " + actual; 
+    assertTrue(msg, expected == actual);
+  }
+
+  @Test
+  public void properDistanceFoundForBalancedTreeAtRoot(){
+    Graph g = new Graph(10); 
+    g.addEdge(0, 2);
+    g.addEdge(0, 1);
+    g.addEdge(1, 4);
+    g.addEdge(1, 3);
+    g.addEdge(2, 6);
+    g.addEdge(2, 5);
+    g.addEdge(3, 8);
+    g.addEdge(3, 7);
+    g.addEdge(4, 9);
+    BreadthFirstPaths bfs = new BreadthFirstPaths(g, 0);
+    int expected = 0;
+    int actual = bfs.distTo(0);
+    String msg = "Expected: " + expected + ", returned: " + actual; 
+    assertTrue(msg, expected == actual);
+  }
+
+  @Test
+  public void properDistanceOnAGeneralGraph(){
+    try{
+      Graph g = new Graph(new Scanner(new File("data/graphTest/tinyCG.txt")));
+      BreadthFirstPaths bfs = new BreadthFirstPaths(g, 0);
+      int expected = 1;
+      int actual = bfs.distTo(5);
+      String msg = "Expected: " + expected + ", returned: " + actual; 
+      assertTrue(msg, expected == actual);
     }
     catch (FileNotFoundException e){
       e.printStackTrace();

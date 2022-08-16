@@ -2,10 +2,12 @@ package com.mgraca.algorithms.graphs.undirected;
 
 import com.mgraca.algorithms.fundamentals.LinkedQueue;
 import com.mgraca.algorithms.fundamentals.LinkedStack;
+import java.util.NoSuchElementException;
 
 public class BreadthFirstPaths{
   private boolean[] marked;
   private int[] edgeTo;
+  private int[] distTo;
   private final int s;
 
   /**
@@ -17,6 +19,7 @@ public class BreadthFirstPaths{
   public BreadthFirstPaths(Graph g, int s){
     marked = new boolean[g.V()];
     edgeTo = new int[g.V()];
+    distTo = new int[g.V()];
     validateVertex(s);
     this.s = s;
     bfs(g, s);
@@ -33,6 +36,7 @@ public class BreadthFirstPaths{
       for (int w : g.adj(v)){
         if (!marked[w]){
           edgeTo[w] = v;
+          distTo[w] += distTo[v] + 1;
           marked[w] = true;
           queue.enqueue(w);
         }
@@ -49,6 +53,19 @@ public class BreadthFirstPaths{
   public boolean hasPathTo(int v){
     validateVertex(v);
     return marked[v];
+  }
+
+  /**
+   * Finds the distance between the source and a given vertex, in constant time
+   * @param v the vertex
+   * @return the distance between the source and a given vertex
+   */
+  public int distTo(int v){
+    validateVertex(v);
+    String msg = "Cannot find distance to a vertex not connected to the source";
+    if (!hasPathTo(v))
+      throw new NoSuchElementException(msg);
+    return distTo[v];
   }
 
   // ensure v is within range
