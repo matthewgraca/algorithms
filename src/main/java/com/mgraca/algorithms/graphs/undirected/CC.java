@@ -6,7 +6,7 @@ package com.mgraca.algorithms.graphs.undirected;
 public class CC{
   private boolean[] marked; // is there an s-v path?
   private int[] id;
-  private int count;        // number of vertices connected to s
+  private int count;        // number of connected components 
 
   /**
    * Finds the connected components of a graph using depth-first search
@@ -35,8 +35,8 @@ public class CC{
   }
 
   /**
-   * Gets the number of vertices connected to s 
-   * @return the number of vertices visited
+   * Gets the number of connected components; 1 if graph is connected 
+   * @return the number of connected components
    */
   public int count(){
     return count;
