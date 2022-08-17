@@ -151,4 +151,33 @@ public class GraphPropertiesTest{
     assertTrue(msg, expected == actual);
   }
 
+  /****************************************************************************
+   * Wiener Tests
+   ***************************************************************************/
+  @Test
+  public void wienerOfTinyCG(){
+    GraphProperties gp = initgp("data/graphTest/tinyCG.txt");
+    int expected = 22;
+    int actual = gp.wiener();
+    String msg = "Expected: " + expected + ", returned: " + actual;
+    assertTrue(msg, expected == actual);
+  }
+
+  @Test
+  public void wienerOfUnbalancedTree(){
+    GraphProperties gp = initgpUnbalancedTree();
+    int expected = 165;
+    int actual = gp.wiener();
+    String msg = "Expected: " + expected + ", returned: " + actual;
+    assertTrue(msg, expected == actual);
+  }
+
+  @Test
+  public void wienerOfBalancedTree(){
+    GraphProperties gp = initgpBalancedTree();
+    int expected = 127;
+    int actual = gp.wiener();
+    String msg = "Expected: " + expected + ", returned: " + actual;
+    assertTrue(msg, expected == actual);
+  }
 }

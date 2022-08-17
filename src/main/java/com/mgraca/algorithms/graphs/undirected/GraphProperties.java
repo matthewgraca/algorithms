@@ -80,14 +80,20 @@ public class GraphProperties{
 
   /**
    * Computes the sum of the lengths of the shortest paths between all pairs of 
-   * vertices, or the Wiener index
+   * vertices; the Wiener index
    * @return the sum of the lengths of the shortest paths between all pairs of 
    * vertices
    */
   public int wiener(){
-    return 0;
+    int sum = 0;
+    for (int v = 0; v < G.V(); v++){
+      BreadthFirstPaths bfs = new BreadthFirstPaths(G, v);
+      for (int w = v+1; w < G.V(); w++){
+        sum += bfs.distTo(w);
+      }
+    }
+    return sum;
   }
-
 
   /**
    * Gets the length of the shortest cycle in a graph
