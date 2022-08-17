@@ -1,6 +1,7 @@
 package com.mgraca.algorithms.graphs.undirected;
 
 import java.util.NoSuchElementException;
+import com.mgraca.algorithms.fundamentals.LinkedQueue;
 
 /**
  * Determines and computes various graph properties
@@ -88,9 +89,8 @@ public class GraphProperties{
     int sum = 0;
     for (int v = 0; v < G.V(); v++){
       BreadthFirstPaths bfs = new BreadthFirstPaths(G, v);
-      for (int w = v+1; w < G.V(); w++){
+      for (int w = v+1; w < G.V(); w++)
         sum += bfs.distTo(w);
-      }
     }
     return sum;
   }
@@ -100,6 +100,40 @@ public class GraphProperties{
    * @return the length of the shortest cycle
    */
   public int girth(){
-    return 0;
+    int min = Integer.MAX_VALUE;
+    for (int v = 0; v < G.V(); v++){
+      int cycleLength = bfsCycle(v);
+      if (min > cycleLength)
+        min = cycleLength;
+    }
+    return min;
+  }
+
+  // bfs with added cycle detection and length tracking
+  // returns max int if no cycle found
+  private int bfsCycle(int s){
+    // using edgeTo[] parent-link tree, find the min depth which a vertex 
+    // appears for the second time when bfs is run at a vertex v
+    boolean[] marked = new boolean[G.V()];
+    int[] edgeTo = new int[G.V()];
+    int[] distTo = new int[G.V()];
+    LinkedQueue<Integer> queue = new LinkedQueue<>();
+    queue.enqueue(s);
+    marked[s] = true;
+    while (!queue.isEmpty()){
+      int v = queue.dequeue();
+      for (int w : G.adj(v)){
+        if (!marked[w]){
+          marked[w] = true;
+          edgeTo[w] = v;
+          distTo[w] = distTo[v] + 1;
+          queue.enqueue(w);
+        }
+        else if (w != edgeTo[v]){
+          return distTo[w] + distTo[v] + 1;
+        }
+      }
+    }
+    return Integer.MAX_VALUE;
   }
 }

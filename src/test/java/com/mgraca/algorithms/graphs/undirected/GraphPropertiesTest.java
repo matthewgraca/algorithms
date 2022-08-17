@@ -180,4 +180,65 @@ public class GraphPropertiesTest{
     String msg = "Expected: " + expected + ", returned: " + actual;
     assertTrue(msg, expected == actual);
   }
+
+  /****************************************************************************
+   * Girth Tests
+   ***************************************************************************/
+  @Test
+  public void girthOfTinyCG(){
+    GraphProperties gp = initgp("data/graphTest/tinyCG.txt");
+    int expected = 3;
+    int actual = gp.girth();
+    String msg = "Expected: " + expected + ", returned: " + actual;
+    assertTrue(msg, expected == actual);
+  }
+
+  @Test
+  public void girthOfUnbalancedTree(){
+    GraphProperties gp = initgpUnbalancedTree();
+    int expected = Integer.MAX_VALUE;
+    int actual = gp.girth();
+    String msg = "Expected: " + expected + ", returned: " + actual;
+    assertTrue(msg, expected == actual);
+  }
+
+  @Test
+  public void girthOfBalancedTree(){
+    GraphProperties gp = initgpBalancedTree();
+    int expected = Integer.MAX_VALUE;
+    int actual = gp.girth();
+    String msg = "Expected: " + expected + ", returned: " + actual;
+    assertTrue(msg, expected == actual);
+  }
+
+  @Test
+  public void girthOfCycleGraph(){
+    Graph g = new Graph(5);
+    g.addEdge(0,1);
+    g.addEdge(1,2);
+    g.addEdge(2,3);
+    g.addEdge(3,4);
+    g.addEdge(4,0);
+    GraphProperties gp = new GraphProperties(g);
+    int expected = 5;
+    int actual = gp.girth();
+    String msg = "Expected: " + expected + ", returned: " + actual;
+    assertTrue(msg, expected == actual);
+  }
+
+  @Test
+  public void girthOfSmallCycleWithinLargeCycleGraph(){
+    Graph g = new Graph(5);
+    g.addEdge(0,1);
+    g.addEdge(1,2);
+    g.addEdge(2,3);
+    g.addEdge(3,4);
+    g.addEdge(4,0);
+    g.addEdge(4,2);
+    GraphProperties gp = new GraphProperties(g);
+    int expected = 3;
+    int actual = gp.girth();
+    String msg = "Expected: " + expected + ", returned: " + actual;
+    assertTrue(msg, expected == actual);
+  }
 }
