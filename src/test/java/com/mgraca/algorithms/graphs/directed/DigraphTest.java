@@ -173,7 +173,6 @@ public class DigraphTest{
       Scanner in = new Scanner(path);
       g = new Digraph(in);
       in.close();
-      assertTrue(g.V() == 13 && g.E() == 22);
     }
     catch (FileNotFoundException e){
       e.printStackTrace();
@@ -195,4 +194,40 @@ public class DigraphTest{
     assertTrue( "\nExpected:\n" + gString + "\nReturned:\n" + g.toString(), 
                 gString.equals(g.toString()));
   }
+
+  /****************************************************************************
+   * Reverse Tests
+   ***************************************************************************/
+
+  @Test
+  public void reverseProperlyReversesDigraph(){
+    Digraph g = null;
+    try{
+      File path = new File("data/graphTest/tinyDG.txt");
+      Scanner in = new Scanner(path);
+      g = new Digraph(in);
+      g = g.reverse();
+      in.close();
+    }
+    catch (FileNotFoundException e){
+      e.printStackTrace();
+    }
+    String gString = g.V() + " vertices, " + g.E() + " edges\n";
+    gString += "0: 6 2 \n";
+    gString += "1: 0 \n";
+    gString += "2: 4 3 \n";
+    gString += "3: 4 2 \n";
+    gString += "4: 11 6 5 \n";
+    gString += "5: 3 0 \n";
+    gString += "6: 8 7 \n";
+    gString += "7: \n";
+    gString += "8: 6 \n";
+    gString += "9: 12 7 6 \n";
+    gString += "10: 9 \n";
+    gString += "11: 9 \n";
+    gString += "12: 11 10 \n";
+    assertTrue( "\nExpected:\n" + gString + "\nReturned:\n" + g.toString(), 
+                gString.equals(g.toString()));
+  }
+
 }
